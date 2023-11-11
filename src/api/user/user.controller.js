@@ -1,4 +1,3 @@
-const User = require('./user.model')
 const {
   getUsers,
   getUserById,
@@ -21,9 +20,9 @@ const getUserByIdController = async (req, res) => {
     const { id } = req.params
     const user = await getUserById(id)
 
-    res.status(200).json({ message: 'Users listed', data: user })
+    res.status(200).json({ message: 'User listed', data: user })
   } catch (error) {
-    res.status(400).json({ message: 'Error listing users', error: error.message })
+    res.status(400).json({ message: 'Error listing user', error: error.message })
   }
 }
 
@@ -39,7 +38,7 @@ const createUserController = async (req, res) => {
     }
     const user = await createUser(newUser)
 
-    res.status(201).json({ message: 'User could not be created', data: user })
+    res.status(201).json({ message: 'User created sucesfully', data: user })
   } catch (error) {
     res.status(400).json({ message: 'User could not be created', data: error.message })
   }
@@ -52,9 +51,9 @@ const updateUserController = async (req, res) => {
 
     const user = await updateUser(id, data)
 
-    res.status(200).json({ message: 'Todo updated', data: user })
+    res.status(200).json({ message: 'User updated', data: user })
   } catch (error) {
-    res.status(400).json({ message: 'Todo could not updated', data: error.message })
+    res.status(401).json({ message: 'User could not updated', data: error.message })
   }
 }
 
