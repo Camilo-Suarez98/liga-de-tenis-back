@@ -9,6 +9,15 @@ const getUsers = async () => {
   }
 }
 
+const getUserById = async (id) => {
+  try {
+    const user = User.findById(id)
+    return user
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const createUser = async (data) => {
   try {
     const user = await User.create(data)
@@ -18,7 +27,18 @@ const createUser = async (data) => {
   }
 }
 
+const updateUser = async (id, data) => {
+  try {
+    const user = await User.findByIdAndUpdate(id, data)
+    return user
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 module.exports = {
   getUsers,
-  createUser
+  getUserById,
+  createUser,
+  updateUser
 }

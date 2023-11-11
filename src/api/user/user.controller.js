@@ -1,10 +1,12 @@
 const User = require('./user.model')
 const {
   getUsers,
-  createUser
+  getUserById,
+  createUser,
+  updateUser
 } = require('./user.service')
 
-const getUsersController = async (req, res) => {
+const getUsersController = async (_, res) => {
   try {
     const users = await getUsers()
 
@@ -14,6 +16,16 @@ const getUsersController = async (req, res) => {
   }
 }
 
+const getUserByIdController = async (req, res) => {
+  try {
+    const { id } = req.params
+    const user = await getUserById(id)
+
+    res.status(200).json({ message: 'Users listed', data: user })
+  } catch (error) {
+    res.status(400).json({ message: 'Error listing users', error: error.message })
+  }
+}
 
 const createUserController = async (req, res) => {
   try {
@@ -33,7 +45,22 @@ const createUserController = async (req, res) => {
   }
 }
 
+const updateUserController = async (req, res) => {
+  try {
+    const { id } = req.params
+    const data = req.body
+
+    const user = await updateUser(id, data)
+
+    res.status(200).json({ message: 'Todo updated', data: user })
+  } catch (error) {
+    res.status(400).json({ message: 'Todo could not updated', data: error.message })
+  }
+}
+
 module.exports = {
   getUsersController,
-  createUserController
+  getUserByIdController,
+  createUserController,
+  updateUserController
 }
