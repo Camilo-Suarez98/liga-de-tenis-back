@@ -26,7 +26,8 @@ const loginHandler = async (req, res) => {
     const profile = {
       name: getUser.name,
       lastName: getUser.lastName,
-      email: getUser.email
+      email: getUser.email,
+      role: getUser.isAdmin
     }
 
     res.status(200).json({ message: "Welcome to the app", token, profile })

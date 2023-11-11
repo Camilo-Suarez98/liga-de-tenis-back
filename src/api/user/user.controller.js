@@ -1,9 +1,11 @@
 const {
   getUsers,
   getUserById,
+  getUserByEmail,
   createUser,
   updateUser
 } = require('./user.service')
+const { signToken } = require('../../auth/auth.service')
 
 const getUsersController = async (_, res) => {
   try {
@@ -28,17 +30,37 @@ const getUserByIdController = async (req, res) => {
 
 const createUserController = async (req, res) => {
   try {
-    const { name, lastName, email, password } = req.body
+    const { name, lastName, email, password, isAdmin } = req.body
+
+    const getUser = await getUserByEmail(email)
+    if (getUser) {
+      return res.status(401).send('Email already exists');
+    }
 
     const newUser = {
       name,
       lastName,
       email,
-      password
+      password,
+      isAdmin
     }
     const user = await createUser(newUser)
 
-    res.status(201).json({ message: 'User created sucesfully', data: user })
+    const payload = {
+      id: user.id,
+      email: user.email
+    }
+
+    const token = signToken(payload)
+
+    const profile = {
+      name: user.name,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.isAdmin
+    }
+
+    res.status(201).json({ message: 'User created sucesfully', token, profile })
   } catch (error) {
     res.status(400).json({ message: 'User could not be created', data: error.message })
   }

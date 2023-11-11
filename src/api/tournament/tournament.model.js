@@ -2,10 +2,30 @@ const { Schema, model } = require('mongoose')
 
 const tournamentSchema = new Schema(
   {
-    name: String,
-    description: String,
-    date: String,
-    location: String,
+    name: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    date: {
+      type: String,
+      required: true
+    },
+    location: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: String,
+      required: true
+    },
     participans: [{
       type: Schema.Types.ObjectId,
       ref: 'user'

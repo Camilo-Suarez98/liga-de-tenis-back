@@ -29,14 +29,9 @@ const getTournamentByIdController = async (req, res) => {
 
 const createTournamentController = async (req, res) => {
   try {
-    const { name, description, date, location } = req.body
+    const data = req.body
 
-    const newTournament = {
-      name,
-      description,
-      date,
-      location
-    }
+    const newTournament = data
     const tournament = await createTournament(newTournament)
 
     res.status(201).json({ message: 'Tournament created sucesfully', data: tournament })

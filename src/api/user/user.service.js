@@ -4,6 +4,19 @@ const { hashPassword } = require('../../auth/utils/bcrypt')
 const getUsers = async () => {
   try {
     const users = await User.find()
+
+    if (users.length === 0) {
+      const firstUser = new User({
+        name: 'Camilo',
+        lastaName: 'Suarez',
+        correo: 'cs@test.com',
+        isAdmin: true,
+      })
+
+      await firstUser.save()
+    } else {
+      users[0].isAdmin = true
+    }
     return users
   } catch (error) {
     throw new Error(error)
