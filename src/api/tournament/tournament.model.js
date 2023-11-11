@@ -5,7 +5,11 @@ const tournamentSchema = new Schema(
     name: String,
     description: String,
     date: String,
-    location: String
+    location: String,
+    participans: [{
+      type: Schema.Types.ObjectId,
+      ref: 'user'
+    }]
   },
   {
     timestamps: true,

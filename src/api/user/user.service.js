@@ -1,4 +1,5 @@
 const User = require('./user.model')
+const { hashPassword } = require('../../auth/utils/bcrypt')
 
 const getUsers = async () => {
   try {
@@ -18,8 +19,23 @@ const getUserById = async (id) => {
   }
 }
 
-const createUser = async (data) => {
+const getUserByEmail = async (value) => {
   try {
+    const user = await User.findOne({ email: value })
+    return user
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const createUser = async (input) => {
+  try {
+    const hashedPassword = await hashPassword(input.password)
+
+    const data = {
+      ...input,
+      password: hashedPassword
+    }
     const user = await User.create(data)
     return user
   } catch (error) {
@@ -39,6 +55,7 @@ const updateUser = async (id, data) => {
 module.exports = {
   getUsers,
   getUserById,
+  getUserByEmail,
   createUser,
   updateUser
 }
