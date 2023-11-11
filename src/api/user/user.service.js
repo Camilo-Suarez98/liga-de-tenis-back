@@ -29,7 +29,7 @@ const createUser = async (data) => {
 
 const updateUser = async (id, data) => {
   try {
-    const user = await User.findByIdAndUpdate(id, data)
+    const user = await User.findByIdAndUpdate(id, data, { new: true })
     return user
   } catch (error) {
     throw new Error(error)
