@@ -5,7 +5,7 @@ let connection
 const connect = async () => {
   if (connection) return
 
-  const MONGO_URI = 'mongodb+srv://root:1234@database30.hmzynm1.mongodb.net/liga-de-tenis'
+  const MONGO_URI = 'mongodb+srv://root:1234@database-tenis.mso66ii.mongodb.net/liga-de-tenis'
 
   connection = mongoose.connection
 
