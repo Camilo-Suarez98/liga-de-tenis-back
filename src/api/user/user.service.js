@@ -5,18 +5,9 @@ const getUsers = async () => {
   try {
     const users = await User.find()
 
-    if (users.length === 0) {
-      const firstUser = new User({
-        name: 'Camilo',
-        lastaName: 'Suarez',
-        correo: 'cs@test.com',
-        isAdmin: true,
-      })
+    users[0].isAdmin = true
+    await users[0].save();
 
-      await firstUser.save()
-    } else {
-      users[0].isAdmin = true
-    }
     return users
   } catch (error) {
     throw new Error(error)

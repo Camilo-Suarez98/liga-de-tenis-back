@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { isAuthenticated } = require('../../auth/auth.controller')
 const {
   getUsersController,
   getUserByIdController,
@@ -9,7 +10,7 @@ const {
 router.route('/').get(getUsersController)
 router.route('/').post(createUserController)
 
-router.route('/:id').get(getUserByIdController)
-router.route('/:id').put(updateUserController)
+router.route('/:id').get(isAuthenticated, getUserByIdController)
+router.route('/:id').put(isAuthenticated, updateUserController)
 
 module.exports = router
