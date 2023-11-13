@@ -26,7 +26,7 @@ const tournamentSchema = new Schema(
       type: String,
       required: true
     },
-    participans: [{
+    participants: [{
       type: Schema.Types.ObjectId,
       ref: 'user'
     }]
