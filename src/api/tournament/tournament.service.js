@@ -4,6 +4,10 @@ const Tournament = require('./tournament.model')
 const getTournaments = async () => {
   try {
     const tournaments = await Tournament.find()
+      .populate({
+        path: 'participants',
+        select: ('_id name lastName')
+      })
     return tournaments
   } catch (error) {
     throw new Error(error)

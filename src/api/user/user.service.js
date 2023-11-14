@@ -4,6 +4,10 @@ const { hashPassword } = require('../../auth/utils/bcrypt')
 const getUsers = async () => {
   try {
     const users = await User.find()
+      .populate({
+        path: 'tournaments',
+        select: ('_id name date location')
+      })
 
     users[0].isAdmin = true
     await users[0].save();
