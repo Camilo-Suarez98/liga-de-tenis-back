@@ -3,7 +3,8 @@ const {
   getUserById,
   getUserByEmail,
   createUser,
-  updateUser
+  updateUser,
+  deleteUser
 } = require('./user.service')
 const { signToken } = require('../../auth/auth.service')
 
@@ -34,7 +35,7 @@ const createUserController = async (req, res) => {
 
     const getUser = await getUserByEmail(email)
     if (getUser) {
-      return res.status(401).send('Email already exists');
+      return res.status(401).send('Email already exist');
     }
 
     const newUser = {
@@ -75,7 +76,18 @@ const updateUserController = async (req, res) => {
 
     res.status(200).json({ message: 'User updated', data: user })
   } catch (error) {
-    res.status(401).json({ message: 'User could not updated', data: error.message })
+    res.status(401).json({ message: 'User could not be updated', data: error.message })
+  }
+}
+
+const deleteUserController = async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const user = await deleteUser(id)
+    res.status(201).json({ message: 'User deleted', data: user })
+  } catch (error) {
+    res.status(401).json({ message: 'User could not be deleted', data: error.message })
   }
 }
 
@@ -83,5 +95,6 @@ module.exports = {
   getUsersController,
   getUserByIdController,
   createUserController,
-  updateUserController
+  updateUserController,
+  deleteUserController
 }

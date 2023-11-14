@@ -17,7 +17,11 @@ const userSchema = new Schema(
     isAdmin: {
       type: Boolean,
       default: false
-    }
+    },
+    tournaments: [{
+      type: Schema.Types.ObjectId,
+      ref: 'tournament'
+    }]
   },
   {
     timestamps: true,
