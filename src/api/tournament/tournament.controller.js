@@ -3,6 +3,7 @@ const {
   getTournamentById,
   createTournament,
   updateTournament,
+  updateUsersInTournament,
   deleteTournament
 } = require('./tournament.service')
 
@@ -53,6 +54,17 @@ const updateTournamentController = async (req, res) => {
   }
 }
 
+const updateUsersInTournamentController = async (req, res) => {
+  try {
+    const { userId, tournamentId } = req.body
+    const result = await updateUsersInTournament(userId, tournamentId)
+
+    res.status(200).json({ message: 'Registered user in the tournament', data: result })
+  } catch (error) {
+    res.status(401).json({ message: 'Error in the registration of user in tournament', data: error.message });
+  }
+}
+
 const deleteTournamentController = async (req, res) => {
   try {
     const { id } = req.params
@@ -70,5 +82,6 @@ module.exports = {
   getTournamentByIdController,
   createTournamentController,
   updateTournamentController,
+  updateUsersInTournamentController,
   deleteTournamentController
 }
