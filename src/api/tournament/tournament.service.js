@@ -44,10 +44,10 @@ const updateTournament = async (id, data) => {
 const updateUsersInTournament = async (userId, tournamentId) => {
   try {
     const tournament = await Tournament.findById(tournamentId)
-    const userExist = User.findById(userId)
+    const userExists = User.findById(userId)
 
-    if (!userExist) {
-      throw new Error('User does not exist')
+    if (!userExists) {
+      throw new Error('User does not exists')
     }
 
     if (tournament.participants.includes(userId)) {

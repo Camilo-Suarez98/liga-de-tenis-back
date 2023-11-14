@@ -35,7 +35,7 @@ const createUserController = async (req, res) => {
 
     const getUser = await getUserByEmail(email)
     if (getUser) {
-      return res.status(401).send('Email already exist');
+      return res.status(401).send('Email already exists');
     }
 
     const newUser = {
