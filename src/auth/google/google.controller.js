@@ -1,4 +1,5 @@
-const { createUser, getUserByEmail } = require('../../api/user/user.service');
+const { getUserByEmail } = require('../../api/user/user.service');
+const User = require('../../api/user/user.model');
 const { signToken } = require('../auth.service');
 
 const createUserWithGoogleHandler = async (req, res) => {
@@ -8,7 +9,7 @@ const createUserWithGoogleHandler = async (req, res) => {
     const checkUser = await getUserByEmail(email)
 
     if (checkUser) {
-      res.status(401).json({ message: 'Email already exists ' })
+      return res.status(401).json({ message: 'Email already exists ' })
     }
     const newUser = {
       ...req.body,
@@ -18,7 +19,7 @@ const createUserWithGoogleHandler = async (req, res) => {
       isAdmin
     }
 
-    const user = await createUser(newUser)
+    const user = await User.create(newUser)
 
     const payload = {
       id: user.id,
@@ -36,6 +37,7 @@ const createUserWithGoogleHandler = async (req, res) => {
 
     res.status(201).json({ message: 'User created succesfully', token, profile })
   } catch (error) {
+    console.log(error.message);
     res.status(400).json({ message: 'User could not be created', data: error.message })
   }
 }
@@ -54,7 +56,7 @@ const loginWithGoogleHandler = async (req, res) => {
 
     const user = await getUserByEmail(data.email)
     if (!user) {
-      res.status(400).json({ message: 'User has not an account with Google in DB' })
+      return res.status(400).json({ message: 'User has not an account with Google in DB' })
     }
 
     const payload = {

@@ -10,10 +10,12 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      required: true,
       unique: true
     },
-    password: String,
+    password: {
+      type: String,
+      required: false
+    },
     isAdmin: {
       type: Boolean,
       default: false
