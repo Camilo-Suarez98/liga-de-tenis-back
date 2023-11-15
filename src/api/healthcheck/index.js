@@ -1,8 +1,6 @@
-import { Router } from "express";
-import { healcheckHandler } from "./healthcheck.controller";
+const router = require('express').Router()
+const { healcheckHandler } = require("./healthcheck.controller");
 
-const router = Router()
+router.route('/').get(healcheckHandler)
 
-router.get('/', healcheckHandler)
-
-export default router
+module.exports = router
