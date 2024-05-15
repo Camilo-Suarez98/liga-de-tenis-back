@@ -32,6 +32,7 @@
 
 
 ## Uso
+
 El proyecto incluye aproximadamente 10 endpoints funcionales. La tabla anterior es un ejemplo de la ruta `/api/tournament`. Si necesitas crea un torneo aqui esta el ejemplo para hacerlo (Solo el usuario administrador puede cear, editar o eliminar los torneos).
 
 ### Ejemplo: **Creación de un torneo**:
