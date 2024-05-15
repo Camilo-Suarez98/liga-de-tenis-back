@@ -1,6 +1,6 @@
-const router = require('express').Router()
-const { loginHandler } = require('./local.controller')
+const router = require('express').Router();
+const { loginHandler } = require('./local.controller');
 
-router.route('/login').post(loginHandler)
+router.route('/login').post(loginHandler);
 
-module.exports = router
+module.exports = router;

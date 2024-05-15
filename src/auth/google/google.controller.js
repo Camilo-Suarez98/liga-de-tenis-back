@@ -6,44 +6,44 @@ const createUserWithGoogleHandler = async (req, res) => {
   const { name, lastName, email, isAdmin } = req.body;
 
   try {
-    const checkUser = await getUserByEmail(email)
+    const checkUser = await getUserByEmail(email);
 
     if (checkUser) {
-      return res.status(401).json({ message: 'Email already exists ' })
-    }
+      return res.status(401).json({ message: 'Email already exists ' });
+    };
+
     const newUser = {
       ...req.body,
       name,
       lastName,
       email,
       isAdmin
-    }
+    };
 
-    const user = await User.create(newUser)
+    const user = await User.create(newUser);
 
     const payload = {
       id: user.id,
       email: user.email
-    }
+    };
 
-    const token = signToken(payload)
+    const token = signToken(payload);
 
     const profile = {
       name: user.name,
       lastName: user.lastName,
       email: user.email,
       role: user.isAdmin
-    }
+    };
 
-    res.status(201).json({ message: 'User created succesfully', token, profile })
+    res.status(201).json({ message: 'User created succesfully', token, profile });
   } catch (error) {
-    console.log(error.message);
-    res.status(400).json({ message: 'User could not be created', data: error.message })
+    res.status(400).json({ message: 'User could not be created', data: error.message });
   }
-}
+};
 
 const loginWithGoogleHandler = async (req, res) => {
-  const { name, lastName, email, isAdmin } = req.body
+  const { name, lastName, email, isAdmin } = req.body;
 
   try {
     const data = {
@@ -54,32 +54,32 @@ const loginWithGoogleHandler = async (req, res) => {
       isAdmin
     }
 
-    const user = await getUserByEmail(data.email)
+    const user = await getUserByEmail(data.email);
     if (!user) {
-      return res.status(400).json({ message: 'User has not an account with Google in DB' })
-    }
+      return res.status(400).json({ message: 'User has not an account with Google in DB' });
+    };
 
     const payload = {
       id: user.id,
       email: user.email
-    }
+    };
 
-    const token = signToken(payload)
+    const token = signToken(payload);
 
     const profile = {
       name: user.name,
       lastName: user.lastName,
       email: user.email,
       role: user.isAdmin
-    }
+    };
 
-    res.status(200).json({ message: 'Login succesful', token, profile })
+    res.status(200).json({ message: 'Login succesful', token, profile });
   } catch (error) {
-    res.status(400).json({ message: 'Error in login, try it again' })
+    res.status(400).json({ message: 'Error in login, try it again' });
   }
-}
+};
 
 module.exports = {
   createUserWithGoogleHandler,
   loginWithGoogleHandler
-}
+};

@@ -1,5 +1,5 @@
-const User = require('./user.model')
-const { hashPassword } = require('../../auth/utils/bcrypt')
+const User = require('./user.model');
+const { hashPassword } = require('../../auth/utils/bcrypt');
 
 const getUsers = async () => {
   try {
@@ -7,67 +7,72 @@ const getUsers = async () => {
       .populate({
         path: 'tournaments',
         select: ('_id name date location')
-      })
+      });
 
-    users[0].isAdmin = true
+    users[0].isAdmin = true;
     await users[0].save();
 
-    return users
+    return users;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const getUserById = async (id) => {
   try {
-    const user = User.findById(id)
-    return user
+    const user = User.findById(id);
+
+    return user;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const getUserByEmail = async (value) => {
   try {
-    const user = await User.findOne({ email: value })
-    return user
+    const user = await User.findOne({ email: value });
+
+    return user;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const createUser = async (input) => {
   try {
-    const hashedPassword = await hashPassword(input.password)
+    const hashedPassword = await hashPassword(input.password);
 
     const data = {
       ...input,
       password: hashedPassword
-    }
-    const user = await User.create(data)
-    return user
+    };
+    const user = await User.create(data);
+
+    return user;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const updateUser = async (id, data) => {
   try {
-    const user = await User.findByIdAndUpdate(id, data, { new: true })
-    return user
+    const user = await User.findByIdAndUpdate(id, data, { new: true });
+
+    return user;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const deleteUser = async (id) => {
   try {
-    const user = await User.findByIdAndDelete(id)
-    return user
+    const user = await User.findByIdAndDelete(id);
+
+    return user;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 module.exports = {
   getUsers,
@@ -76,4 +81,4 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser
-}
+};

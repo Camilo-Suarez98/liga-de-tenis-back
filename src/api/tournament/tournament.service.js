@@ -1,5 +1,5 @@
-const User = require('../user/user.model')
-const Tournament = require('./tournament.model')
+const User = require('../user/user.model');
+const Tournament = require('./tournament.model');
 
 const getTournaments = async () => {
   try {
@@ -7,51 +7,55 @@ const getTournaments = async () => {
       .populate({
         path: 'participants',
         select: ('_id name lastName')
-      })
-    return tournaments
+      });
+
+    return tournaments;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const getTournamentById = async (id) => {
   try {
-    const tournament = Tournament.findById(id)
-    return tournament
+    const tournament = Tournament.findById(id);
+
+    return tournament;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const createTournament = async (data) => {
   try {
-    const tournament = await Tournament.create(data)
-    return tournament
+    const tournament = await Tournament.create(data);
+
+    return tournament;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const updateTournament = async (id, data) => {
   try {
-    const tournament = await Tournament.findByIdAndUpdate(id, data, { new: true })
-    return tournament
+    const tournament = await Tournament.findByIdAndUpdate(id, data, { new: true });
+
+    return tournament;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const updateUsersInTournament = async (userId, tournamentId) => {
   try {
-    const tournament = await Tournament.findById(tournamentId)
-    const userExists = User.findById(userId)
+    const tournament = await Tournament.findById(tournamentId);
+    const userExists = User.findById(userId);
 
     if (!userExists) {
-      throw new Error('User does not exists')
+      throw new Error('User does not exists');
     }
 
     if (tournament.participants.includes(userId)) {
-      throw new Error('User already registered in this tournament')
+      throw new Error('User already registered in this tournament');
     }
 
     const checkUser = await User.findByIdAndUpdate(userId, { $push: { tournaments: tournamentId } }, { new: true });
@@ -64,20 +68,21 @@ const updateUsersInTournament = async (userId, tournamentId) => {
     return {
       checkUser,
       checkTournament
-    }
+    };
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 const deleteTournament = async (id) => {
   try {
-    const tournament = await Tournament.findByIdAndDelete(id)
-    return tournament
+    const tournament = await Tournament.findByIdAndDelete(id);
+
+    return tournament;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-}
+};
 
 module.exports = {
   getTournaments,
@@ -86,4 +91,4 @@ module.exports = {
   updateTournament,
   updateUsersInTournament,
   deleteTournament
-}
+};
